@@ -1,16 +1,35 @@
 import React, { Component } from 'react';
 import './App.css';
+import UsersList from './UsersList'
+import ButtonFetchUsers from './ButtonFetchUsers'
 
+const API = 'https://randomuser.me/api/?results=5';
 class App extends Component {
   state = {
-
+    users: null
   }
+
+  handleDataFetch = () => {
+    // console.log('click');
+    fetch(API)
+      .then(response => {
+        if (response.ok) {
+          return response
+        }
+        throw Error(response.status)
+      })
+      .then()
+      .catch(error => console.log(error + " Ola Boga ale Bug !!!"))
+  }
+
   render() {
-    return ( 
+    const users = this.state.users;
+    return (
       <div>
-        Działa
+        <ButtonFetchUsers click={this.handleDataFetch} />
+        {users ? <UsersList users={users} /> : users}
       </div>
-     );
+    );
   }
 }
 
